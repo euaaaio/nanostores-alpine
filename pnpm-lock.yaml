@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@logux/eslint-config':
-        specifier: 57.0.2
-        version: 57.0.2(@typescript-eslint/utils@8.57.1(eslint@10.1.0)(typescript@5.9.3))(eslint@10.1.0)(typescript@5.9.3)
+        specifier: 57.1.0
+        version: 57.1.0(@typescript-eslint/utils@8.57.1(eslint@10.1.0)(typescript@5.9.3))(eslint@10.1.0)(typescript@5.9.3)
       '@size-limit/preset-small-lib':
         specifier: ^12.0.1
         version: 12.0.1(size-limit@12.0.1)
@@ -305,8 +305,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@logux/eslint-config@57.0.2':
-    resolution: {integrity: sha512-oUCMUUckJOCQMs4QwwQiptyk+g/sXAUBh7ab6Ewvq89o2zZtAJuL2lz1YOj3z5Q8yhBf2q9jyNnX0RatwL3FXw==}
+  '@logux/eslint-config@57.1.0':
+    resolution: {integrity: sha512-oOlYsAu5iQBzNL75QqGWVnpgle/Nz5/Gp5P6BtHRy5vBg7UXyGVqEzaG3lMHF6dgYGVb+wkLqIC0DWIH8wp/LA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
@@ -983,12 +983,6 @@ packages:
   eslint-plugin-prefer-let@4.2.0:
     resolution: {integrity: sha512-i4XjGFrX3lODYQkqnaWB+FWbocYKHncicX4jm132cl0zBC49rPHorh0XcMkhnQwuoapJ3KwxELyoWHyLh4A0Lg==}
     engines: {node: '>=0.10.0'}
-
-  eslint-plugin-promise@7.2.1:
-    resolution: {integrity: sha512-SWKjd+EuvWkYaS+uN2csvj0KoP43YTu7+phKQ5v+xw6+A0gutVX2yqCeCkC3uLCJFiPfR2dD8Es5L7yUsmvEaA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
 
   eslint-scope@9.1.2:
     resolution: {integrity: sha512-xS90H51cKw0jltxmvmHy2Iai1LIqrfbw57b79w/J7MfvDfkIkFZ+kj6zC3BjtUwh150HsSSdxXZcsuv72miDFQ==}
@@ -1847,7 +1841,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@logux/eslint-config@57.0.2(@typescript-eslint/utils@8.57.1(eslint@10.1.0)(typescript@5.9.3))(eslint@10.1.0)(typescript@5.9.3)':
+  '@logux/eslint-config@57.1.0(@typescript-eslint/utils@8.57.1(eslint@10.1.0)(typescript@5.9.3))(eslint@10.1.0)(typescript@5.9.3)':
     dependencies:
       '@eslint/eslintrc': 3.3.5
       eslint: 10.1.0
@@ -1855,7 +1849,6 @@ snapshots:
       eslint-plugin-n: 17.24.0(eslint@10.1.0)(typescript@5.9.3)
       eslint-plugin-perfectionist: 5.7.0(eslint@10.1.0)(typescript@5.9.3)
       eslint-plugin-prefer-let: 4.2.0
-      eslint-plugin-promise: 7.2.1(eslint@10.1.0)
       globals: 17.4.0
       typescript-eslint: 8.57.1(eslint@10.1.0)(typescript@5.9.3)
     transitivePeerDependencies:
@@ -2441,11 +2434,6 @@ snapshots:
   eslint-plugin-prefer-let@4.2.0:
     dependencies:
       requireindex: 1.2.0
-
-  eslint-plugin-promise@7.2.1(eslint@10.1.0):
-    dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.1.0)
-      eslint: 10.1.0
 
   eslint-scope@9.1.2:
     dependencies:

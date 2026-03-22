@@ -5,12 +5,12 @@ import { NanoStores } from '../index.js'
 import { withStores } from '../with-stores/index.js'
 
 // Stores
-const $counter = atom(0)
-const $profile = map({ name: 'Alice', role: 'user' })
-const $username = atom('Alice')
-const $cart = atom([])
-const $clicks = atom(0)
-const $lastAction = atom('')
+let $counter = atom(0)
+let $profile = map({ name: 'Alice', role: 'user' })
+let $username = atom('Alice')
+let $cart = atom([])
+let $clicks = atom(0)
+let $lastAction = atom('')
 
 // Expose stores as Alpine magics for use in HTML expressions
 Alpine.magic('cart', () => $cart)

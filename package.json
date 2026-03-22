@@ -37,7 +37,7 @@
     "format": "oxfmt"
   },
   "devDependencies": {
-    "@logux/eslint-config": "57.0.2",
+    "@logux/eslint-config": "57.1.0",
     "@size-limit/preset-small-lib": "^12.0.1",
     "@types/node": "^25.0.0",
     "@vitest/coverage-v8": "^4.0.18",
