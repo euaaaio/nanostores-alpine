@@ -6,9 +6,9 @@ import { withStores } from '../with-stores/index.js'
 
 // Stores
 let $counter = atom(0)
-let $profile = map({ name: 'Alice', role: 'user' })
+let $profile = map<{ name: string; role: string }>({ name: 'Alice', role: 'user' })
 let $username = atom('Alice')
-let $cart = atom([])
+let $cart = atom<string[]>([])
 let $clicks = atom(0)
 let $lastAction = atom('')
 
@@ -22,7 +22,7 @@ Alpine.magic('username', () => $username)
 Alpine.data(
   'dashboard',
   withStores({ lastAction: $lastAction, total: $clicks }, () => ({
-    click(label) {
+    click(this: { total: number }, label: string) {
       $clicks.set(this.total + 1)
       $lastAction.set(`Button ${label}`)
     },
