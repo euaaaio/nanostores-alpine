@@ -1,18 +1,32 @@
 # Nano Stores Alpine
 
-Alpine.js integration for [Nano Stores](https://github.com/nanostores/nanostores), a tiny state manager.
+<img align="right" width="92" height="92" title="Nano Stores logo"
+     src="https://nanostores.github.io/nanostores/logo.svg">
+
+[Alpine.js] integration for **[Nano Stores]**, a tiny state manager with many atomic tree-shakable stores.
+
+* **Small.** Less than 1.2 KB (minified + brotli). Zero dependencies.
+* **Tree-shakable.** Use only the parts you need: directive, magic, or component helper.
+* **Smart.** Store subscriptions are created and cleaned up automatically.
+* It has good **TypeScript** support.
+
+```html
+<div x-data x-nano:user="$profile">
+  <header>Hi, <strong x-text="user.name"></strong>!</header>
+</div>
+```
 
 
 ## Install
 
 ```sh
-npm install nanostores-alpine
+npm install nanostores alpinejs nanostores-alpine
 ```
 
 
 ## Usage
 
-### Plugin Setup
+### Setup
 
 ```js
 import Alpine from 'alpinejs'
@@ -27,14 +41,18 @@ Or register individual parts:
 ```js
 import { directivePlugin, magicPlugin } from 'nanostores-alpine'
 
-Alpine.plugin(directivePlugin) // registers x-nano and x-nano-model
-Alpine.plugin(magicPlugin) // registers $nano
+// Registers x-nano and x-nano-model directives
+Alpine.plugin(directivePlugin)
+
+// Registers $nano magic property
+Alpine.plugin(magicPlugin)
 ```
 
 
-### Store State (`x-nano` directive)
+### Reactive state
 
-Bind a store to a named scope property. The property updates reactively.
+The primary way to use stores in templates. Binds a store to a named scope
+property on the element — reactive and available to all child expressions.
 
 ```html
 <div x-data x-nano:count="$counter">
@@ -61,9 +79,10 @@ Combine reads with mutations:
 ```
 
 
-### Two-way Binding (`x-nano-model` directive)
+### Model
 
-Sync a store bidirectionally with `x-model` form inputs.
+Two-way binding between a store and a form input. Changes to the input update
+the store; store changes reflect in the input.
 
 ```html
 <div x-data x-nano-model:name="$name">
@@ -72,13 +91,13 @@ Sync a store bidirectionally with `x-model` form inputs.
 </div>
 ```
 
-When the input changes, the store is updated. When the store changes, the input reflects it.
+> Works with `atom` stores. For `map` stores use `x-nano` + `setKey`.
 
-> Works with `atom` stores holding any value. For `map` stores use `x-nano` + manual `setKey`.
 
-### Inline Access (`$nano` magic)
+### Magic
 
-Read a store value anywhere in an expression — no `x-data` required on the element.
+Reads a store value inline — in any expression, on any element, without
+wrapping in `x-data`. Useful for attribute bindings and one-off reads.
 
 ```html
 <span x-text="$nano($counter)"></span>
@@ -87,21 +106,17 @@ Read a store value anywhere in an expression — no `x-data` required on the ele
 <button :disabled="$nano($isLoading)">Save</button>
 ```
 
+> Not recommended inside `x-for` — `x-for` does not reliably clean up
+> subscriptions per item. Use `x-nano` on the parent element instead.
 
-### Alpine.data Components (`withStores`)
 
-For complex components registered with `Alpine.data`, use `withStores` to get
-type-safe initial values and automatic subscription management.
+### Data
 
-```js
-// stores.js
-import { atom, map } from 'nanostores'
-export const $profile = map({ name: 'Anonymous', age: 0 })
-export const $cart = atom([])
-```
+For `Alpine.data` components. Injects store values as typed initial state and
+keeps them in sync through the component lifecycle. Best choice when you want
+to keep store logic out of the template entirely.
 
 ```js
-// header.js
 import Alpine from 'alpinejs'
 import { withStores } from 'nanostores-alpine/with-stores'
 import { $cart, $profile } from './stores.js'
@@ -131,43 +146,37 @@ Alpine.data(
 ```
 
 
-## API Comparison
-
-| API                           | When to use                                                                       |
-| ----------------------------- | --------------------------------------------------------------------------------- |
-| `x-nano:key="$store"`         | Primary choice. Template-driven bindings with automatic cleanup.                  |
-| `x-nano-model:key="$store"`   | Two-way binding for form inputs with atom stores.                                 |
-| `$nano($store)`               | Inline expressions, attribute bindings (`:class`, `:disabled`).                   |
-| `withStores(stores, factory)` | `Alpine.data` components — TypeScript-friendly, keeps stores out of the template. |
-
-
 ## TypeScript
 
 ```ts
 import { atom, map } from 'nanostores'
-import type { StoreValue } from 'nanostores'
 import { withStores } from 'nanostores-alpine/with-stores'
 
-const $count = atom(0)
-const $user = map({ name: 'Alice' })
+const $user = map({ name: 'Alice', role: 'admin' })
+const $notifications = atom(0)
 
-// withStores infers types from the stores map:
 Alpine.data(
-  'myComp',
-  withStores({ count: $count, user: $user }, ({ count, user }) => {
-    // count: number, user: { name: string }
-    return {
-      get doubled(): number {
-        return this.count * 2
-      }
+  'userProfile',
+  withStores({ user: $user, unread: $notifications }, () => ({
+    // user: { name: string, role: string }, unread: number
+    get greeting(): string {
+      return `Hi, ${this.user.name}`
+    },
+    get hasUnread(): boolean {
+      return this.unread > 0
     }
-  })
+  }))
 )
 ```
 
 
 ## Limitations
 
-- **`$nano` inside `x-for`**: Not recommended — `x-for` does not reliably dispatch `alpine:destroy` on individual items. Use `x-nano` on the `x-for` parent element instead.
-- **`x-nano-model` with map stores**: Only atom stores are supported for two-way binding. Use `x-nano` + `setKey` for map stores.
-- **SSR**: Alpine.js does not support server-side rendering; neither does this package.
+- **`x-nano-model` with map stores**: Only `atom` stores are supported for
+  two-way binding. Use `x-nano` + `setKey` for map stores.
+- **SSR**: Alpine.js does not support server-side rendering; neither does
+  this package.
+
+
+[Nano Stores]: https://github.com/nanostores/nanostores
+[Alpine.js]: https://alpinejs.dev
